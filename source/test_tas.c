@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#define LIMIT 1000000000
+#define LIMIT 100000
 #define THREAD_COUNT 8
 
 unsigned long int i=0;
@@ -44,7 +44,7 @@ int main(void){
 void *iterate(){
 	while(1){
 		if(__atomic_test_and_set(&flag, __ATOMIC_SEQ_CST) != true){
-			printf("%d\n",++i);
+			//printf("%d\n",++i);
 			__atomic_clear(&flag, __ATOMIC_SEQ_CST);
 		}
 		else break;

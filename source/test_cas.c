@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#define LIMIT 1000000000
+#define LIMIT 1000000
 #define THREAD_COUNT 8
 
 unsigned long int i=0;
@@ -43,7 +43,8 @@ void *iterate(){
 	int tmp;
 	while(1){
 		if(tmp = __atomic_load_n(&i, __ATOMIC_SEQ_CST) < LIMIT)
-			__sync_val_compare_and_swap(&i, tmp, tmp+1);
-		else break;
+		{printf("%d\n",tmp);
+			__atomic_compare_exchange_n(&i, &tmp, tmp+1, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+		}else break;
 	}
 }
