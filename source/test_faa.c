@@ -40,9 +40,6 @@ int main(void){
 }
 
 void *iterate(){
-	while(1){
-		if(__atomic_load_n(&i, __ATOMIC_SEQ_CST) < LIMIT)
-			__atomic_add_fetch(&i, 1, __ATOMIC_SEQ_CST);
-		else break;
-	}
+	for(int j=0;j<LIMIT/THREAD_COUNT;j++)
+		__atomic_add_fetch(&i, 1, __ATOMIC_SEQ_CST);
 }

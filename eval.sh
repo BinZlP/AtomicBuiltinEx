@@ -2,7 +2,7 @@ if [ $# -ne 1 ]; then
 	echo "Missing argument: $0 [command]"
 	exit -1
 else
-	gcc -o ./test/$1_test.out ./source/test_$1.c -lpthread
+	gcc -o ./test/$1_test.out ./source/test_$1.c -lpthread -O0
 
 	echo "Evaluation start"
 	echo "Target: $1"

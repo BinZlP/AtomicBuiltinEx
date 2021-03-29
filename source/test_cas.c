@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#define LIMIT 1000000
+#define LIMIT 1000000000
 #define THREAD_COUNT 8
 
 unsigned long int i=0;
@@ -40,16 +40,21 @@ int main(void){
 }
 
 void *iterate(){
-	int tmp;
-	for(int j=0;j<LIMIT/THREAD_COUNT;j++){
-		printf("%d\n" , __atomic_load_n(&i, __ATOMIC_SEQ_CST);
-		__atomic_compare_exchange_n(&i, &i, i+1, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
-	}
+	unsigned long int tmp;
+	/*for(int j=0;j<LIMIT/THREAD_COUNT;j++){
+		//__atomic_compare_exchange_n(&i, &i, i+1, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+		while(1){
+			tmp = __atomic_load_n(&i, __ATOMIC_SEQ_CST);
+			//printf("%d\n", tmp);
+			if(__sync_bool_compare_and_swap(&i, tmp, tmp+1)) break;
+		}
+	}*/
 
-	/*while(1){
-		if(tmp = __atomic_load_n(&i, __ATOMIC_SEQ_CST) < LIMIT) {
-			printf("%d\n", tmp);
+	while(1){
+		tmp = __atomic_load_n(&i, __ATOMIC_SEQ_CST);
+		if(tmp < LIMIT) {
+			//printf("%d\n", tmp);
 			__atomic_compare_exchange_n(&i, &tmp, tmp+1, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
 		}else break;
-	}*/
+	}
 }

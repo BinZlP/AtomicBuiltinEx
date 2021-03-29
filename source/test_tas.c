@@ -42,10 +42,13 @@ int main(void){
 }
 
 void *iterate(){
-	for(int j=0;j<LIMIT/THREAD_COUNT;j++){
+	bool isFin=0;
+	while(!isFin){
 		while(__atomic_test_and_set((void *)(&flag), __ATOMIC_SEQ_CST) == true){}
 		//printf("%d\n",++i);
-		++i;
+		if(i<LIMIT) ++i;
+		else isFin=1;
 		__atomic_clear(&flag, __ATOMIC_SEQ_CST);
+
 	}
 }

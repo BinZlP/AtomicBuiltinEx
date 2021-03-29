@@ -40,11 +40,13 @@ int main(void){
 }
 
 void *iterate(){
-	while(1){
+	while(1) {
 		__sync_synchronize();
-		if(i < LIMIT) ++i;
+		//__atomic_thread_fence(__ATOMIC_SEQ_CST);
+		if(i<LIMIT)++i;
 		else break;
 		__sync_synchronize();
+		//__atomic_thread_fence(__ATOMIC_SEQ_CST);
 
 	}
 }
