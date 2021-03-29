@@ -41,10 +41,15 @@ int main(void){
 
 void *iterate(){
 	int tmp;
-	while(1){
-		if(tmp = __atomic_load_n(&i, __ATOMIC_SEQ_CST) < LIMIT)
-		{printf("%d\n",tmp);
+	for(int j=0;j<LIMIT/THREAD_COUNT;j++){
+		printf("%d\n" , __atomic_load_n(&i, __ATOMIC_SEQ_CST);
+		__atomic_compare_exchange_n(&i, &i, i+1, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+	}
+
+	/*while(1){
+		if(tmp = __atomic_load_n(&i, __ATOMIC_SEQ_CST) < LIMIT) {
+			printf("%d\n", tmp);
 			__atomic_compare_exchange_n(&i, &tmp, tmp+1, 0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
 		}else break;
-	}
+	}*/
 }
